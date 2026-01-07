@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>A little something</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+    }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #c9c1e6, #9bb3d6);
+      animation: bgShift 12s ease-in-out infinite alternate;
+      color: #2e2e2e;
+    }
+
+    @keyframes bgShift {
+      from { filter: brightness(0.95); }
+      to { filter: brightness(0.85); }
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.08);
+    }
+
+    /* ---------- SCREEN 1 ---------- */
+
+    .intro-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      animation: floatText 3s ease-in-out infinite;
+    }
+
+    .intro-sub {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      opacity: 0.7;
+    }
+
+    .intro-btn {
+      margin-top: 50px;
+      padding: 18px 52px;
+      border-radius: 50px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6f8cff, #9f7aea);
+      color: white;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .intro-btn:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    }
+
+    /* ---------- SCREEN 2 ---------- */
+
+    .birthday-title {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #5f7cff, #b07cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .birthday-sub {
+      margin-top: 14px;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #444;
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    .message-box {
+      margin-top: 55px;
+      padding: 40px 45px;
+      max-width: 440px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      animation: popIn 1s ease forwards;
+      transition: transform 0.4s ease;
+    }
+
+    .message-box:hover {
+      transform: translateY(-10px) scale(1.03);
+    }
+
+    .message-box p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #2f2f2f;
+    }
+
+    /* ---------- FLOATING DOTS ---------- */
+
+    .dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      animation: floatUp linear infinite;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+
+    @keyframes floatText {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 15px rgba(176,124,255,0.6); }
+      to { text-shadow: 0 0 35px rgba(95,124,255,0.9); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(110vh); opacity: 0; }
+      20% { opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN 1 -->
+  <div class="screen" id="screen1">
+    <div class="intro-title">A LITTLE SOMETHING </div>
+    <div class="intro-sub">TAP WHEN YOU'RE READY 🙂</div>
+    <button class="intro-btn" onclick="reveal()">OPEN 🎁</button>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div class="screen hidden" id="screen2">
+    <div class="birthday-title">HAPPY BIRTHDAY, PAHANDI 🎉</div>
+    <div class="birthday-sub">HOPE TODAY FEELS EXTRA NICE 🌸</div>
+
+    <div class="message-box">
+      <p>
+        ANOTHER YEAR, ANOTHER MOMENT WORTH CELEBRATING ✨<br><br>
+        MAY THIS ONE BRING GOOD ENERGY, BIG WINS,
+        AND REASONS TO SMILE WITHOUT TRYING TOO HARD 🙂
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function reveal() {
+      document.getElementById("screen1").classList.add("hidden");
+      document.getElementById("screen2").classList.remove("hidden");
+      spawnDots();
+    }
+
+    function spawnDots() {
+      setInterval(() => {
+        const d = document.createElement("div");
+        d.className = "dot";
+        d.style.left = Math.random() * 100 + "vw";
+        d.style.animationDuration = 6 + Math.random() * 6 + "s";
+        document.body.appendChild(d);
+        setTimeout(() => d.remove(), 12000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
