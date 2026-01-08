@@ -5,7 +5,7 @@
   <title>A Little Something</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,40 +17,42 @@
 
     body {
       min-height: 100vh;
+      background: linear-gradient(135deg, #a9a0c9, #7f96bd);
+      animation: bgShift 16s ease-in-out infinite alternate;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #c9c1e6, #9bb3d6);
-      animation: bgShift 12s ease-in-out infinite alternate;
       color: #2e2e2e;
     }
 
     @keyframes bgShift {
-      from { filter: brightness(0.95); }
-      to { filter: brightness(0.85); }
+      from { filter: brightness(0.9); }
+      to { filter: brightness(0.82); }
     }
 
     .screen {
       position: absolute;
       inset: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
-      text-align: center;
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      align-items: center;
+      transition: opacity 0.9s ease, transform 0.9s ease;
     }
 
     .hidden {
       opacity: 0;
       pointer-events: none;
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
 
     /* ---------- SCREEN 1 ---------- */
 
+    #screen1 {
+      justify-content: center;
+      text-align: center;
+    }
+
     .intro-title {
       font-size: 3.2rem;
       font-weight: 800;
-      letter-spacing: 2px;
       text-transform: uppercase;
       animation: floatText 3s ease-in-out infinite;
     }
@@ -58,7 +60,7 @@
     .intro-sub {
       margin-top: 14px;
       font-size: 1.1rem;
-      opacity: 0.7;
+      opacity: 0.75;
       text-transform: uppercase;
     }
 
@@ -80,31 +82,72 @@
       box-shadow: 0 30px 70px rgba(0,0,0,0.35);
     }
 
-    .intro-btn:active {
-      transform: scale(0.96);
+    /* ---------- CONFETTI ---------- */
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      animation: confettiFall linear forwards;
+      opacity: 0.9;
+    }
+
+    @keyframes confettiFall {
+      from { transform: translateY(-10vh) rotate(0deg); }
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
     /* ---------- SCREEN 2 ---------- */
 
-    .photo-wrapper {
-      margin-bottom: 26px;
-      animation: fadeDown 1.2s ease forwards;
+    #screen2 {
+      justify-content: flex-start;
+      text-align: center;
+      overflow-y: auto;
+      padding-top: 4.5cm;
+      padding-bottom: 3rem;
     }
 
-    .photo-glow {
-      width: 220px;
-      height: 220px;
+    .photo-wrapper {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    /* Neon particle container */
+    .particle-layer {
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      padding: 8px;
+      background: radial-gradient(circle, #ffe6ff, #ff9de2, transparent);
+      box-shadow: 0 0 14px #ffb6f2, 0 0 30px #ffffff;
+      animation: shoot 1.8s ease-out forwards;
+    }
+
+    /* Radius = 8cm → Diameter = 16cm */
+    .photo-glow {
+      width: 8cm;
+      height: 8cm;
+      border-radius: 50%;
+      padding: 0.7cm;
       background: linear-gradient(
         135deg,
         rgba(255,182,193,0.95),
         rgba(255,255,255,0.95)
       );
       box-shadow:
-        0 0 30px rgba(255,182,193,0.8),
-        0 0 70px rgba(255,255,255,0.5);
-      animation: pulseGlow 2.5s ease-in-out infinite alternate;
+        0 0 60px rgba(255,182,193,0.9),
+        0 0 130px rgba(255,255,255,0.75);
+      animation: pulseGlow 2.8s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 2;
+      margin: 0 auto;
     }
 
     .photo-glow img {
@@ -116,7 +159,7 @@
     }
 
     .birthday-title {
-      font-size: 3.8rem;
+      font-size: 3.6rem;
       font-weight: 800;
       text-transform: uppercase;
       background: linear-gradient(90deg, #5f7cff, #b07cff);
@@ -131,48 +174,58 @@
       font-weight: 500;
       color: #444;
       text-transform: uppercase;
-      animation: fadeUp 1.2s ease forwards;
     }
 
     .message-box {
       margin-top: 55px;
       padding: 40px 45px;
-      max-width: 440px;
+      max-width: 480px;
       border-radius: 26px;
       background: rgba(255,255,255,0.45);
       backdrop-filter: blur(14px);
       box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-      animation: popIn 1s ease forwards;
-      transition: transform 0.4s ease;
-    }
-
-    .message-box:hover {
-      transform: translateY(-10px) scale(1.03);
     }
 
     .message-box p {
       font-size: 1rem;
       line-height: 1.8;
-      color: #2f2f2f;
       text-transform: uppercase;
+      color: #2f2f2f;
     }
 
-    /* ---------- FLOATING DOTS ---------- */
-
-    .dot {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.7);
-      animation: floatUp linear infinite;
+    .signature {
+      margin-top: 28px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      opacity: 0.55;
+      text-transform: uppercase;
     }
 
     /* ---------- ANIMATIONS ---------- */
 
-    @keyframes floatText {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes shoot {
+      from {
+        transform: translate(0,0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulseGlow {
+      from {
+        box-shadow:
+          0 0 45px rgba(255,182,193,0.7),
+          0 0 90px rgba(255,255,255,0.5);
+      }
+      to {
+        box-shadow:
+          0 0 75px rgba(255,182,193,0.95),
+          0 0 150px rgba(255,255,255,0.8);
+      }
     }
 
     @keyframes glow {
@@ -180,45 +233,9 @@
       to { text-shadow: 0 0 35px rgba(95,124,255,0.9); }
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes pulseGlow {
-      from {
-        box-shadow:
-          0 0 25px rgba(255,182,193,0.6),
-          0 0 50px rgba(255,255,255,0.35);
-      }
-      to {
-        box-shadow:
-          0 0 40px rgba(255,182,193,0.9),
-          0 0 80px rgba(255,255,255,0.6);
-      }
-    }
-
-    @keyframes floatUp {
-      from { transform: translateY(110vh); opacity: 0; }
-      20% { opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
+    @keyframes floatText {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
   </style>
 </head>
@@ -235,8 +252,10 @@
   <div class="screen hidden" id="screen2">
 
     <div class="photo-wrapper">
+      <div class="particle-layer" id="particles"></div>
+
       <div class="photo-glow">
-        <img src="assets/pahandi.jpg" alt="Pahandi" />
+        <img src="assets/pahandi.jpg" alt="Pahandi">
       </div>
     </div>
 
@@ -249,35 +268,57 @@
         May this one bring good energy, big wins,
         and reasons to smile without trying too hard 🙂
       </p>
+      <div class="signature">From Chethiya</div>
     </div>
 
   </div>
 
   <script>
-    let dotsStarted = false;
-
     function reveal() {
-      document.getElementById("screen1").classList.add("hidden");
-      document.getElementById("screen2").classList.remove("hidden");
+      launchConfetti();
+      setTimeout(() => {
+        document.getElementById("screen1").classList.add("hidden");
+        document.getElementById("screen2").classList.remove("hidden");
+        startParticles();
+      }, 700);
+    }
 
-      if (!dotsStarted) {
-        dotsStarted = true;
-        spawnDots();
+    function launchConfetti() {
+      const colors = ["#ffb6c1", "#ffffff", "#9f7aea", "#6f8cff"];
+      for (let i = 0; i < 120; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = 3 + Math.random() * 2 + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
       }
     }
 
-    function spawnDots() {
+    function startParticles() {
+      const layer = document.getElementById("particles");
+      const radius = 260; // pixels from center, outside frame
+
       setInterval(() => {
-        const d = document.createElement("div");
-        d.className = "dot";
-        d.style.left = Math.random() * 100 + "vw";
-        d.style.animationDuration = 6 + Math.random() * 6 + "s";
-        document.body.appendChild(d);
-        setTimeout(() => d.remove(), 12000);
-      }, 320);
+        const p = document.createElement("div");
+        p.className = "particle";
+
+        const angle = Math.random() * Math.PI * 2;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        p.style.left = `calc(50% + ${x}px)`;
+        p.style.top = `calc(50% + ${y}px)`;
+
+        p.style.setProperty("--dx", `${Math.cos(angle) * 180}px`);
+        p.style.setProperty("--dy", `${Math.sin(angle) * 180}px`);
+
+        layer.appendChild(p);
+        setTimeout(() => p.remove(), 2000);
+      }, 120);
     }
   </script>
 
 </body>
 </html>
-
